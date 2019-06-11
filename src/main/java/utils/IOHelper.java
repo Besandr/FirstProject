@@ -1,4 +1,4 @@
-package common.composite;
+package utils;
 
 import java.io.InputStream;
 import java.io.PrintStream;

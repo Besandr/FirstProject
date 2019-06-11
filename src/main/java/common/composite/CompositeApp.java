@@ -1,5 +1,7 @@
 package common.composite;
 
+import utils.IOHelper;
+
 public class CompositeApp {
 
     public void go(){
