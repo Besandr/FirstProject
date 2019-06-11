@@ -18,7 +18,6 @@ public class MovieDistributorApp {
 
         Client client = new Client(distributor);
         client.watchMovie();
-
     }
 
     AbstractDistributor offerMovie(Catalogue catalogue){

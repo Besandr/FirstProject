@@ -1,6 +1,7 @@
 package common.destribution;
 
 import utils.IOHelper;
+import utils.UserInteractingHelper;
 
 import java.util.HashMap;
 
@@ -17,23 +18,29 @@ class AppHelper {
             ioHelper.print("");
         }
 
-        while (true) {
+        UserInteractingHelper userInteractingHelper = new UserInteractingHelper(ioHelper);
+        int movieID = userInteractingHelper.takeUserChoice(1, catalogue.getMoviesTitles().size()) - 1;
 
-            String choice = ioHelper.input("Enter your choice: ");
+        return catalogue.getMoviesTitles().get(movieID);
 
-            try {
-                int movieID = Integer.parseInt(choice) - 1;
 
-                if (movieID >= 0 && movieID < catalogue.getMoviesTitles().size()) {
-                    return catalogue.getMoviesTitles().get(movieID);
-                } else {
-                    ioHelper.print("You should enter a correct number");
-                }
-
-            } catch (NumberFormatException e) {
-                ioHelper.print("You should enter a correct number");
-            }
-        }
+//        while (true) {
+//
+//            String choice = ioHelper.input("Enter your choice: ");
+//
+//            try {
+//                int movieID = Integer.parseInt(choice) - 1;
+//
+//                if (movieID >= 0 && movieID < catalogue.getMoviesTitles().size()) {
+//                    return catalogue.getMoviesTitles().get(movieID);
+//                } else {
+//                    ioHelper.print("You should enter a correct number");
+//                }
+//
+//            } catch (NumberFormatException e) {
+//                ioHelper.print("You should enter a correct number");
+//            }
+//        }
     }
 
     Languages languageChoosing(IOHelper ioHelper){
@@ -44,26 +51,11 @@ class AppHelper {
             ioHelper.print(language.ordinal() + 1 + ". " + language);
         }
 
+        UserInteractingHelper userInteractingHelper = new UserInteractingHelper(ioHelper);
 
-        while (true) {
+        int language = userInteractingHelper.takeUserChoice(1, Languages.values().length) - 1;
 
-            String choice = ioHelper.input("Enter your choice: ");
-
-            try {
-                int language = Integer.parseInt(choice) - 1;
-
-                if (language >= 0 && language < Languages.values().length) {
-
-                    return Languages.values()[language];
-
-                } else {
-                    ioHelper.print("You should enter a correct number");
-                }
-
-            } catch (NumberFormatException e) {
-                ioHelper.print("You should enter a correct number");
-            }
-        }
+        return Languages.values()[language];
 
     }
 }
