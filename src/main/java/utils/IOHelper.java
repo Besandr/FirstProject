@@ -2,6 +2,7 @@ package utils;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class IOHelper {
@@ -22,6 +23,10 @@ public class IOHelper {
     }
 
     public void print(Object text) {
-        System.out.println(text);
+        ps.println(text);
+    }
+
+    public void inLinePrint(Object text) {
+        ps.print(text);
     }
 }
