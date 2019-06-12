@@ -17,4 +17,9 @@ public class SBlock implements Block {
     public int[][] getFigure() {
         return figure;
     }
+
+    @Override
+    public void setFigure(int[][] figure) {
+        this.figure = figure;
+    }
 }

@@ -1,14 +1,19 @@
 package common.tetris;
 
 import common.tetris.creators.Block;
+import common.tetris.creators.BlockFactory;
+import common.tetris.creators.BlockTypes;
 import utils.IOHelper;
 import utils.UserInteractingHelper;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TetrisApp {
 
-    enum CreationWay {RANDOM, MANUAL}
+    enum CreationWay {RANDOM, MANUAL, SUPER_EXAMPLE}
+
+    BlockFactory factory = new BlockFactory();
 
     public static void main(String[] args) {
         new TetrisApp().go();
@@ -18,12 +23,12 @@ public class TetrisApp {
 
         IOHelper ioHelper = new IOHelper(System.in, System.out);
         UserInteractingHelper userInteractingHelper = new UserInteractingHelper(ioHelper);
-        GameBlocks gameBlocks = new GameBlocks();
 
         CreationWay creationWay = offerCreationVariants(ioHelper, userInteractingHelper);
 
         Block block = null;
-        List<Block> blockList = gameBlocks.getBlockList();
+        List<BlockTypes> blockList = Arrays.asList(BlockTypes.values());
+
         switch (creationWay) {
             case RANDOM:
                 block = randomBlockCreation(blockList);
@@ -31,19 +36,31 @@ public class TetrisApp {
             case MANUAL:
                 block = manualBlockCreation(blockList, ioHelper, userInteractingHelper);
                 break;
+            case SUPER_EXAMPLE:
+                block = superBlockCreation(blockList);
+                break;
         }
 
         printFigure(block, ioHelper);
     }
 
-    Block randomBlockCreation(List<Block> blockList) {
-
-        int blockIndex = (int) (Math.random() * blockList.size());
-
-        return blockList.get(blockIndex);
+    private Block superBlockCreation(List<BlockTypes> blockList) {
+        return factory.getBlock(BlockTypes.SUPER_BLOCK);
     }
 
-    Block manualBlockCreation(List<Block> blockList, IOHelper ioHelper, UserInteractingHelper userInteractingHelper) {
+    Block randomBlockCreation(List<BlockTypes> blockList) {
+
+        int randomNumber = (int) (Math.random() * 20);
+        if (randomNumber == 13) {
+            return factory.getBlock(BlockTypes.SUPER_BLOCK);
+        }
+
+        int blockIndex = (int) (Math.random() * (blockList.size() - 1));
+
+        return factory.getBlock(blockList.get(blockIndex));
+    }
+
+    Block manualBlockCreation(List<BlockTypes> blockList, IOHelper ioHelper, UserInteractingHelper userInteractingHelper) {
 
         ioHelper.print("Choose block: ");
 
@@ -55,7 +72,7 @@ public class TetrisApp {
 
         int blockIndex = userInteractingHelper.takeUserChoice(1, blockList.size()) - 1;
 
-        return blockList.get(blockIndex);
+        return factory.getBlock(blockList.get(blockIndex));
     }
 
     CreationWay offerCreationVariants(IOHelper ioHelper, UserInteractingHelper userInteractingHelper) {
