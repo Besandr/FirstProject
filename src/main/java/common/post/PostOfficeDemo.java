@@ -28,5 +28,4 @@ public class PostOfficeDemo {
 
         deAgostini.publish();
     }
-
 }

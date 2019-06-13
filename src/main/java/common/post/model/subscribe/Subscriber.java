@@ -18,6 +18,6 @@ public class Subscriber implements PostOfficeObserver {
 
     @Override
     public void update(PublishingProduct product) {
-        System.out.println( name + " got new mail: " + product.getTitle());
+        System.out.println( name + " got new mail: " + product.getClass().getSimpleName() + " \"" + product.getTitle() + "\"");
     }
 }
