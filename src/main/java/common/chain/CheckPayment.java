@@ -8,7 +8,7 @@ public class CheckPayment implements PaymentProcessor {
     @Override
     public void processPayment(Payment payment) {
 
-        if (payment.getCreditor().getDeposit() > payment.getAmount()) {
+        if (payment.getCreditor().getDeposit() > payment.getAmount() + payment.getCommission()) {
             nextProcessor.processPayment(payment);
         } else {
             System.out.println("There is not enough money!");

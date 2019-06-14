@@ -24,7 +24,7 @@ public class MoneyTransfer implements PaymentProcessor {
     void performMoneyTransfer(Payment payment) {
 
         Account creditor = payment.getCreditor();
-        creditor.setDeposit(creditor.getDeposit() - payment.getAmount());
+        creditor.setDeposit(creditor.getDeposit() - payment.getAmount() - payment.getCommission());
 
         Account debtor = payment.getDebtor();
         debtor.setDeposit(debtor.getDeposit() + payment.getAmount());

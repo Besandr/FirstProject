@@ -6,6 +6,7 @@ public class Payment {
     private Account debtor;
     private PaymentType type;
     private int amount;
+    private int commission;
 
     private int ID;
 
@@ -42,5 +43,13 @@ public class Payment {
 
     void setID(int ID) {
         this.ID = ID;
+    }
+
+    public void setCommission(int commission) {
+        this.commission = commission;
+    }
+
+    public int getCommission() {
+        return commission;
     }
 }

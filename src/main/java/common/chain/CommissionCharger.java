@@ -22,27 +22,27 @@ public class CommissionCharger implements PaymentProcessor {
         double commission;
         switch (payment.getType()) {
             case ORDINARY:
-                commission = 1.1;
+                commission = 0.1;
                 pause(100);
                 break;
             case INNER:
-                commission = 1.0;
+                commission = 0;
                 break;
             case PREFERENTIAL:
-                commission = 1.0;
+                commission = 0;
                 pause(1000);
                 break;
             case GOVERNMENT:
-                commission = 1.02;
+                commission = 0.02;
                 pause(500);
                 break;
             default:
-                commission = 1.0;
+                commission = 0;
                 break;
         }
 
-        int amountWithCommission = (int) (payment.getAmount() * commission);
-        payment.setAmount(amountWithCommission);
+        commission = (int) (payment.getAmount() * commission);
+        payment.setCommission((int) commission);
     }
 
     private void pause(int millis) {
