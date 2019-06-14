@@ -1,4 +1,4 @@
-package state;
+package common.state;
 
 import org.junit.Test;
 

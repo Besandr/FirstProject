@@ -1,4 +1,4 @@
-package state;
+package common.state;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,6 +21,10 @@ public class Apply {
 
     void changeState(States newState) {
         state = applyStates.get(newState);
+    }
+
+    void forward(){
+        state.forward();
     }
 
     boolean checkComplianceWithRequirements(){

@@ -1,4 +1,4 @@
-package state;
+package common.state;
 
 public class StateFactory {
 
@@ -23,7 +23,7 @@ public class StateFactory {
             case WITHDRAWN:
                 return new WithdrawnState(apply);
             default:
-                throw  new IllegalArgumentException("There's an unknown state");
+                throw  new IllegalArgumentException("There's an unknown common.state");
         }
     }
 }

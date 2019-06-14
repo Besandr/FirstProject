@@ -1,6 +1,4 @@
-package state;
-
-import state.State;
+package common.state;
 
 public class DeniedState implements State {
 

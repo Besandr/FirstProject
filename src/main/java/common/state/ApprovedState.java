@@ -1,6 +1,4 @@
-package state;
-
-import state.State;
+package common.state;
 
 public class ApprovedState implements State {
 
@@ -12,6 +10,6 @@ public class ApprovedState implements State {
 
     @Override
     public void forward() {
-
+        System.out.println("Your cash is on their way! Be patient.");
     }
 }

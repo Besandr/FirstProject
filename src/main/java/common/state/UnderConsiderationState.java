@@ -1,4 +1,4 @@
-package state;
+package common.state;
 
 public class UnderConsiderationState implements State {
 
