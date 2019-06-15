@@ -2,26 +2,13 @@ package individual.model;
 
 class WaterHeater {
 
-    private TemperatureSensor sensor;
+    private boolean isHeating;
 
-    WaterHeater(TemperatureSensor sensor){
-        this.sensor = sensor;
+    public boolean isHeating() {
+        return isHeating;
     }
 
-    void heat(int targetTemperature) {
-
-        int currentTemp = sensor.getCurrentTemperature();
-
-        while (currentTemp < targetTemperature) {
-
-            try{
-                Thread.sleep(100);
-            } catch (InterruptedException ignored) {}
-
-            currentTemp++;
-        }
-
-        sensor.setCurrentTemperature(currentTemp);
+    public void setHeating(boolean heating) {
+        isHeating = heating;
     }
-
 }

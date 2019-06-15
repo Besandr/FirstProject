@@ -14,7 +14,7 @@ public class DoorTest {
         door = new Door();
     }
 
-    @Test
+   /* @Test
     public void setDoorOpenShouldReturnTrueUnlockedDoor(){
         assertTrue(door.setOpened());
     }
@@ -34,6 +34,6 @@ public class DoorTest {
     public void setDoorLockedShouldReturnFalseWithOpenedDoor(){
         door.setOpened();
         assertFalse(door.setLocked());
-    }
+    }*/
 
 }
