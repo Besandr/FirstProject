@@ -43,7 +43,7 @@ public class ControlPanel implements PropertyChangeListener {
         panelWindow.getContentPane().add(BorderLayout.CENTER, indicator.getIndicatorPanel());
         panelWindow.getContentPane().add(BorderLayout.WEST, userActions.getActionsPanel());
 
-        panelWindow.setSize(400, 400);
+        panelWindow.setSize(450, 450);
 
         panelWindow.setVisible(true);
 

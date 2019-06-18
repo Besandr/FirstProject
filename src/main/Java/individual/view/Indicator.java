@@ -1,6 +1,7 @@
 package individual.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 class Indicator {
 
@@ -16,9 +17,14 @@ class Indicator {
 
     private void init(){
 
+        Font font = new Font("serif", Font.BOLD, 28);
+
         modeLabel = new JLabel("");
+        modeLabel.setFont(font);
         timerLabel = new JLabel("");
+        timerLabel.setFont(font);
         currentOperationLabel = new JLabel("");
+        currentOperationLabel.setFont(font);
 
         indicatorPanel = new JPanel();
         indicatorPanel.setLayout(new BoxLayout(indicatorPanel, BoxLayout.Y_AXIS));
