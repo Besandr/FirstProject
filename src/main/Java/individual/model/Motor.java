@@ -2,15 +2,15 @@ package individual.model;
 
 public class Motor {
 
-    int currentMotorSpeed;
-    boolean isMotorOn;
+    private int currentMotorSpeed;
+    private boolean isMotorOn;
 
     public int getCurrentMotorSpeed() {
         return currentMotorSpeed;
     }
 
-    public void setCurrentMotorSpeed(RotatingType type) {
-        currentMotorSpeed = type.getMotorSpeed();
+    void setCurrentMotorSpeed(RotationType type) {
+        currentMotorSpeed = type.motorSpeed;
     }
 
     public boolean isMotorOn() {

@@ -15,15 +15,15 @@ public class DetergentDrawer {
         compartments.put(DetergentType.SOFTENER, new DetergentDrawerCompartment());
     }
 
-    void loadDetergent(DetergentType type) {
+    public void loadDetergent(DetergentType type) {
         compartments.get(type).setFilled(true);
     }
 
-    void useDetergent(DetergentType type) {
+    public void useDetergent(DetergentType type) {
         compartments.get(type).setFilled(false);
     }
 
-    boolean hasDetergent(DetergentType type) {
+    public boolean hasDetergent(DetergentType type) {
         return compartments.get(type).isFilled();
     }
 }

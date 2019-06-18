@@ -8,7 +8,7 @@ class WaterHeater {
         return isHeating;
     }
 
-    public void setHeating(boolean heating) {
+    void setHeating(boolean heating) {
         isHeating = heating;
     }
 }

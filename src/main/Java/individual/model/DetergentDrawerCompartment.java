@@ -1,14 +1,14 @@
 package individual.model;
 
-public class DetergentDrawerCompartment {
+class DetergentDrawerCompartment {
 
     private boolean isFilled;
 
-    public boolean isFilled() {
+    boolean isFilled() {
         return isFilled;
     }
 
-    public void setFilled(boolean filled) {
+    void setFilled(boolean filled) {
         isFilled = filled;
     }
 }

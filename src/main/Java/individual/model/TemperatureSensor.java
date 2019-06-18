@@ -1,6 +1,6 @@
 package individual.model;
 
-class TemperatureSensor {
+public class TemperatureSensor {
 
     private final int DEFAULT_TEMPERATURE = 16;
 
@@ -10,15 +10,15 @@ class TemperatureSensor {
         resetTemperatureToTapWaterTemp();
     }
 
-    void resetTemperatureToTapWaterTemp(){
+    public void resetTemperatureToTapWaterTemp(){
         currentTemperature = DEFAULT_TEMPERATURE;
     }
 
-    int getCurrentTemperature() {
+    public int getCurrentTemperature() {
         return currentTemperature;
     }
 
-    void setCurrentTemperature(int currentTemperature) {
+    public void setCurrentTemperature(int currentTemperature) {
         this.currentTemperature = currentTemperature;
     }
 }

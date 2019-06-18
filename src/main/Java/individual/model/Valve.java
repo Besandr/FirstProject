@@ -8,7 +8,7 @@ public class Valve {
         return isClosed;
     }
 
-    public void setClosed(boolean closed) {
+    void setClosed(boolean closed) {
         isClosed = closed;
     }
 }

@@ -1,5 +1,8 @@
 package individual.model;
 
+import individual.model.software.MicroOS;
+import individual.view.ControlPanel;
+
 public class WashingMachine {
 
     private Motor motor;
@@ -7,9 +10,10 @@ public class WashingMachine {
     private Door door;
     private DetergentDrawer detergentDrawer;
     private ControlPanel controlPanel;
-    private Microprocessor microprocessor;
     private Valve drainValve;
-    private Valve waterFeedValve;
+    private Valve preWashingWaterFeedValve;
+    private Valve washingWaterFeedValve;
+    private Valve rinsingWaterFeedValve;
     private TemperatureSensor temperatureSensor;
     private WaterHeater waterHeater;
 
@@ -18,32 +22,42 @@ public class WashingMachine {
         drum = new Drum();
         door = new Door();
         detergentDrawer = new DetergentDrawer();
-        controlPanel = new ControlPanel();
         drainValve = new Valve();
-        waterFeedValve = new Valve();
+        preWashingWaterFeedValve = new Valve();
+        washingWaterFeedValve = new Valve();
+        rinsingWaterFeedValve = new Valve();
         temperatureSensor = new TemperatureSensor();
         waterHeater = new WaterHeater();
-        microprocessor = new Microprocessor(this);
+        Microprocessor microprocessor = new Microprocessor(this);
+        MicroOS microOS = new MicroOS(this, microprocessor);
+        controlPanel = new ControlPanel(microOS);
     }
-
 
     public TemperatureSensor getTemperatureSensor() {
         return temperatureSensor;
     }
 
-    public WaterHeater getWaterHeater() {
+    WaterHeater getWaterHeater() {
         return waterHeater;
     }
 
-    public Door getDoor() {
+    Door getDoor() {
         return door;
     }
 
-    public Valve getWaterFeedValve() {
-        return waterFeedValve;
+    Valve getPreWashingWaterFeedValve() {
+        return preWashingWaterFeedValve;
     }
 
-    public Motor getMotor() {
+    Valve getWashingWaterFeedValve() {
+        return washingWaterFeedValve;
+    }
+
+    Valve getRinsingWaterFeedValve() {
+        return rinsingWaterFeedValve;
+    }
+
+    Motor getMotor() {
         return motor;
     }
 
@@ -55,15 +69,62 @@ public class WashingMachine {
         return drum;
     }
 
-    public ControlPanel getControlPanel() {
-        return controlPanel;
-    }
-
-    public Microprocessor getMicroprocessor() {
-        return microprocessor;
-    }
-
-    public Valve getDrainValve() {
+    Valve getDrainValve() {
         return drainValve;
+    }
+
+    public void plugIn(){
+
+        controlPanel.showInterface();
+
+    }
+
+    public boolean isLaundryLoaded() {
+        return drum.isLoaded();
+    }
+
+    public boolean loadLaundry(){
+
+        if (!drum.isLoaded() && door.isOpened() && !door.isLocked()) {
+
+            drum.setLoaded(true);
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    public boolean unloadLaundry() {
+
+        if (drum.isLoaded() && door.isOpened() && !door.isLocked()) {
+
+            drum.setLoaded(false);
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+
+    public boolean isDoorOpened(){
+        return door.isOpened();
+    }
+
+    public boolean openDoor(){
+        if (door.isLocked()) {
+            return false;
+        } else {
+
+            door.setOpened(true);
+            return true;
+        }
+    }
+
+    public void closeDoor(){
+        door.setClosed();
     }
 }

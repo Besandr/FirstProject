@@ -1,17 +1,8 @@
 package individual.model;
 
-import individual.model.subprogram.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Microprocessor {
 
-    WashingMachine machine;
-
-    List<SubProgram> taskProcedure;
-
-    Indicator indicator;
+    private WashingMachine machine;
 
     Microprocessor(WashingMachine machine) {
         this.machine = machine;
@@ -30,150 +21,106 @@ public class Microprocessor {
         }
     }
 
-    public boolean unlockTheDoor(){
+    public void unlockTheDoor(){
         machine.getDoor().setLocked(false);
         System.out.println("The door is unlocked");
-        return true;
     }
 
-    public boolean fillDrumWithWater(DetergentDrawer.DetergentType detergentType){
+    public void openPreWashingWaterFeedValve(){
 
-        Drum drum = machine.getDrum();
+        Valve waterFeedValve = machine.getPreWashingWaterFeedValve();
 
-        if (!drum.isWaterFilled()) {
+        waterFeedValve.setClosed(false);
 
-            Valve waterFeedValve = machine.getWaterFeedValve();
-            DetergentDrawer detergentDrawer = machine.getDetergentDrawer();
-
-            waterFeedValve.setClosed(false);
-            detergentDrawer.useDetergent(detergentType);
-
-            System.out.println("Filling the drum with water");
-
-            try{
-                Thread.sleep(1000);
-            } catch (InterruptedException ignored) {}
-
-            machine.getTemperatureSensor().resetTemperatureToTapWaterTemp();
-
-            drum.setWaterFilled(true);
-
-        }
-
-        return true;
     }
 
-    public boolean heat(int targetTemperature) {
+    public void closePreWashingWaterFeedValve(){
 
-        TemperatureSensor temperatureSensor = machine.getTemperatureSensor();
+        Valve waterFeedValve = machine.getPreWashingWaterFeedValve();
+
+        waterFeedValve.setClosed(true);
+
+    }
+
+    public void openWashingWaterFeedValve(){
+
+        Valve waterFeedValve = machine.getWashingWaterFeedValve();
+
+        waterFeedValve.setClosed(false);
+
+    }
+
+    public void closeWashingWaterFeedValve(){
+
+        Valve waterFeedValve = machine.getWashingWaterFeedValve();
+
+        waterFeedValve.setClosed(true);
+
+    }
+
+    public void openRinsingWaterFeedValve(){
+
+        Valve waterFeedValve = machine.getRinsingWaterFeedValve();
+
+        waterFeedValve.setClosed(false);
+
+    }
+
+    public void closeRinsingWaterFeedValve(){
+
+        Valve waterFeedValve = machine.getRinsingWaterFeedValve();
+
+        waterFeedValve.setClosed(true);
+
+    }
+
+    public void openDrainValve(){
+
+        Valve drainValve = machine.getDrainValve();
+
+        drainValve.setClosed(false);
+    }
+
+    public void closeDrainValve(){
+
+        Valve drainValve = machine.getDrainValve();
+
+        drainValve.setClosed(true);
+    }
+
+    public void startHeating(){
+
         WaterHeater heater = machine.getWaterHeater();
-        System.out.println("Target temp: " + targetTemperature + ". heating ...");
 
-        int currentTemp = temperatureSensor.getCurrentTemperature();
+        heater.setHeating(true);
 
-        if (currentTemp < targetTemperature) {
-            heater.setHeating(true);
-        }
-
-        while (currentTemp < targetTemperature) {
-
-            try{
-                Thread.sleep(100);
-            } catch (InterruptedException ignored) {}
-
-            currentTemp++;
-        }
-
-        temperatureSensor.setCurrentTemperature(currentTemp);
-        heater.setHeating(false);
-
-        return true;
     }
 
-    public boolean runMotor(RotatingType type, int runningTime) {
+    public void stopHeating(){
+
+        WaterHeater heater = machine.getWaterHeater();
+
+        heater.setHeating(false);
+    }
+
+    public void startMotor(RotationType type){
 
         Motor motor = machine.getMotor();
 
         motor.setCurrentMotorSpeed(type);
-        System.out.println("Motor is running with speed: " + type.getMotorSpeed());
+        System.out.println("Motor is running with speed: " + type.motorSpeed);
 
-        try {
-            Thread.sleep(runningTime);
-        } catch (InterruptedException ignored) {}
+    }
 
-        motor.setCurrentMotorSpeed(RotatingType.STOP);
+    public void stopMotor(){
+
+        Motor motor = machine.getMotor();
+
+        motor.setCurrentMotorSpeed(RotationType.STOP);
         System.out.println("Motor is stopped");
 
-        return true;
     }
 
-    public boolean drainTheDrum(boolean withSpinning){
+    public WashingMachine getMachine() {return machine;}
 
-        Drum drum = machine.getDrum();
-
-        if (drum.isWaterFilled()) {
-
-            Valve drainValve = machine.getDrainValve();
-            drainValve.setClosed(false);
-            System.out.println("Drum is draining");
-
-            if (withSpinning) {
-                spinTheDrum(RotatingType.LOW_SPINNING, 2000);
-            }
-
-            drainValve.setClosed(true);
-            drum.setWaterFilled(false);
-            System.out.println("Drum is drained");
-        }
-
-        return true;
-    }
-
-    public boolean spinTheDrum(RotatingType type, int spinningTime) {
-
-        Valve drainValve = machine.getDrainValve();
-
-        if (drainValve.isClosed()) {
-            drainValve.setClosed(false);
-        }
-
-        System.out.println("Spinning the drum with speed: " + type.getMotorSpeed());
-        runMotor(type, spinningTime);
-
-        drainValve.setClosed(true);
-
-        return true;
-    }
-
-    void test(){
-
-        Program normal = new Program(true, 40, RotatingType.NORMAL, RotatingType.MIDDLE_SPINNING);
-
-        taskProcedure = new ArrayList<>();
-        taskProcedure.add(new PreparingSubProgram(this));
-        taskProcedure.add(new PreWashingSubProgram(this));
-        taskProcedure.add(new WashingSubProgram(this));
-        taskProcedure.add(new SpinningSubProgram(this));
-        taskProcedure.add(new FinishingSubProgram(this));
-
-        boolean isExecutingTaskSuccessful = true;
-
-        for (SubProgram subProgram : taskProcedure) {
-            if (!subProgram.execute(normal)) {
-                isExecutingTaskSuccessful = false;
-                break;
-            }
-        }
-
-        if (!isExecutingTaskSuccessful) {
-            System.out.println("Can't execute task");
-            new CancelingSubProgram(this).execute(null);
-        }
-    }
-
-    public static void main(String[] args) {
-        WashingMachine machine = new WashingMachine();
-
-        machine.getMicroprocessor().test();
-    }
 }

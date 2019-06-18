@@ -5,18 +5,9 @@ public class Door {
     private boolean isOpened;
     private boolean isLocked;
 
-    public boolean isOpened() {
+    boolean isOpened() {
         return isOpened;
     }
-
-//    public boolean setOpened() {
-//        if (isLocked) {
-//            return false;
-//        } else {
-//            isOpened = true;
-//            return true;
-//        }
-//    }
 
     public void setOpened(boolean opened) {
         isOpened = opened;
@@ -30,16 +21,7 @@ public class Door {
         return isLocked;
     }
 
-/*    public boolean setLocked() {
-        if (isOpened) {
-            return false;
-        } else {
-            isLocked = true;
-            return true;
-        }
-    }*/
-
-    public void setLocked(boolean locked){
+    void setLocked(boolean locked){
         isLocked = locked;
     }
 
